@@ -1,0 +1,53 @@
+# for gmp (working with '6.2.1')
+#
+./configure --prefix=/opt/arm-none-eabi-gcc-11.3.0
+make
+make install
+
+# for mpfr (working with '4.1.0')
+#
+./configure --prefix=/opt/arm-none-eabi-gcc-11.3.0 --with-gmp=/opt/arm-none-eabi-gcc-11.3.0
+make
+make install
+
+# for mpc (working with '1.2.1')
+#
+./configure --prefix=/opt/arm-none-eabi-gcc-11.3.0 --with-mpfr=/opt/arm-none-eabi-gcc-11.3.0 --with-gmp=/opt/arm-none-eabi-gcc-11.3.0
+make
+make install
+
+# then make binutils (working with '2.37')
+#
+mkdir binutils-2.37-BUILD
+cd binutils-2.37-BUILD
+../binutils-2.37/configure --prefix=/opt/arm-none-eabi-gcc-11.3.0 --target=arm-none-eabi --with-gmp=/opt/arm-none-eabi-gcc-11.3.0 --with-mpfr=/opt/arm-none-eabi-gcc-11.3.0 --with-mpc=/opt/arm-none-eabi-gcc-11.3.0
+make
+make install
+
+# for gcc, bootstrap (working with '11.3.0')
+#
+mkdir gcc-11.3.0-BUILD
+cd gcc-11.3.0-BUILD
+../gcc-11.3.0/configure --prefix=/opt/arm-none-eabi-gcc-11.3.0 --target=arm-none-eabi --with-newlib --without-headers --with-gmp=/opt/arm-none-eabi-gcc-11.3.0 --with-mpfr=/opt/arm-none-eabi-gcc-11.3.0 --with-mpc=/opt/arm-none-eabi-gcc-11.3.0
+make all-gcc
+make install-gcc
+
+# add new arm-none-eabi-gcc to PATH
+#
+export PATH="/opt/arm-none-eabi-gcc-11.3.0/bin/:$PATH"
+
+# for newlib (working with 'tag: newlib-4.1.0')
+#
+mkdir newlib-cygwin-BUILD
+cd newlib-cygwin-BUILD
+../newlib-cygwin/configure --prefix=/opt/arm-none-eabi-gcc-11.3.0 --target=arm-none-eabi --with-gmp=/opt/arm-none-eabi-gcc-11.3.0 --with-mpfr=/opt/arm-none-eabi-gcc-11.3.0 --with-mpc=/opt/arm-none-eabi-gcc-11.3.0
+make
+make install
+
+# for gcc
+# 
+mkdir gcc-11.3.0-BUILD
+cd gcc-11.3.0-BUILD
+../gcc-11.3.0/configure --prefix=/opt/arm-none-eabi-gcc-11.3.0 --target=arm-none-eabi --with-newlib --with-gmp=/opt/arm-none-eabi-gcc-11.3.0 --with-mpfr=/opt/arm-none-eabi-gcc-11.3.0 --with-mpc=/opt/arm-none-eabi-gcc-11.3.0
+make
+make install
